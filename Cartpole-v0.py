@@ -33,7 +33,7 @@ with tf.Session() as sess:
 
     for i_episode in range(epi):
         obs = env.reset()
-
+        env.render()
         for step in range(step_limit):
             action_val = action.eval(feed_dict={X: obs.reshape(1, num_inputs)})
             obs, reward, done, info = env.step(action_val[0][0])
