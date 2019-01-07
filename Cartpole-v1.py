@@ -138,8 +138,8 @@ with tf.Session() as sess:
 
         print('SAVING GRAPH AND SESSION')
 
-        meta_graph_def = tf.train.export_meta_graph(filename='/models/policy-model.meta')
-        saver.save(sess, '/models/policy-model')
+        meta_graph_def = tf.train.export_meta_graph(filename='/models/my-policy-model.meta')
+        saver.save(sess, '/models/my-policy-model')
 
 ### RUN TRAINED MODEL ON ENVIRONMENT #######
 
