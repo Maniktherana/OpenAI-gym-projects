@@ -10,7 +10,7 @@ learning_rate = 0.01
 
 initializer = tf.contrib.layers.variance_scaling_initializer()
 
-### CREATING THE NETWORK #######
+# CREATING THE NETWORK
 X = tf.placeholder(tf.float32, shape=[None, num_inputs])
 
 hidden_layer = tf.layers.dense(X, num_hidden, activation=tf.nn.elu, kernel_initializer=initializer)
@@ -24,11 +24,11 @@ action = tf.multinomial(probabilities, num_samples=1)
 # Convert from Tensor to number for network training
 y = 1.0 - tf.to_float(action)
 
-### LOSS FUNCTION AND OPTIMIZATION ####
+# LOSS FUNCTION AND OPTIMIZATION
 cross_entropy = tf.nn.sigmoid_cross_entropy_with_logits(labels=y, logits=logits)
 optimizer = tf.train.AdamOptimizer(learning_rate)
 
-#### GRADIENTS ################
+# GRADIENTS
 gradients_and_variables = optimizer.compute_gradients(cross_entropy)
 
 gradients = []
@@ -46,7 +46,7 @@ training_op = optimizer.apply_gradients(grads_and_vars_feed)
 init = tf.global_variables_initializer()
 saver = tf.train.Saver()
 
-#### REWARD FUNCTIONs ################
+# REWARD FUNCTIONs
 # BASED OFF https://medium.com/@awjuliani/super-simple-reinforcement-learning-tutorial-part-2-ded33892c724
 
 
@@ -76,7 +76,7 @@ def discount_and_normalize_rewards(all_rewards, discount_rate):
     reward_std = flat_rewards.std()
     return [(discounted_rewards - reward_mean)/reward_std for discounted_rewards in all_discounted_rewards]
 
-#### TRAINING SESSION #################
+# TRAINING SESSION
 
 
 env = gym.make("CartPole-v1")
@@ -141,7 +141,7 @@ with tf.Session() as sess:
         meta_graph_def = tf.train.export_meta_graph(filename='/models/my-policy-model.meta')
         saver.save(sess, '/models/my-policy-model')
 
-### RUN TRAINED MODEL ON ENVIRONMENT #######
+# RUN TRAINED MODEL ON ENVIRONMENT
 
 env = gym.make('CartPole-v1')
 
