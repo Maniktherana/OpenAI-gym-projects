@@ -136,6 +136,9 @@ with tf.Session() as sess:
 
         sess.run(training_op, feed_dict=feed_dict)
 
+    print('SAVING GRAPH AND SESSION')
+    meta_graph_def = tf.train.export_meta_graph(filename='/models/650-step-model.meta')
+    saver.save(sess, '/models/650-step-model')
 
 # RUN TRAINED MODEL ON ENVIRONMENT
 
@@ -143,6 +146,10 @@ env = gym.make('CartPole-v1')
 
 observations = env.reset()
 with tf.Session() as sess:
+
+    # https://www.tensorflow.org/api_guides/python/meta_graph
+    new_saver = tf.train.import_meta_graph('/models/650-step-model.meta')
+    new_saver.restore(sess, '/models/650-step-model')
 
     for x in range(500):
         env.render()
